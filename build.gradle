@@ -1,0 +1,15 @@
+group 'com.tinkerbellissimo'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.seleniumhq.selenium:selenium-java:3.0.1'
+    compile 'org.testng:testng:6.10'
+}
