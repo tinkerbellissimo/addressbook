@@ -1,28 +1,28 @@
 package com.tinkerbellissimo.addressbook.tests;
 
 import com.tinkerbellissimo.addressbook.model.ContactData;
-import org.testng.Assert;
+import com.tinkerbellissimo.addressbook.model.Contacts;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
+
 
 public class ContactCreationTests extends TestBase {
     
   @Test
   public void testContactCreation() {
-    app.getNavigationHelper().goToHomePage();
-    List<ContactData> before = app.getContactHelper().getContactList();
-    ContactData contact = new ContactData("testFirstName", "testLastName",
-            "testAddress", "testHomePhone", "test1");
-    app.getContactHelper().createContact(contact , true);
-    List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after.size(), before.size() + 1);
-
-    before.add(contact);
-    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    app.goTo().homePage();
+    Contacts before = app.contact().all();
+    ContactData contact = new ContactData()
+            .withFirstName("testFirstName").withLastName("testLastName")
+            .withAddress("23-05 Quentin Rd, Apt D1, Brooklyn, NY 11220").withEmail("test@mail.com")
+            .withHomePhone("111").withMobilePhone("222 333").withWorkPhone("(1)2-34").withGroup("test1");
+    app.contact().create(contact, true);
+    assertEquals(app.contact().count(), before.size() + 1);
+    Contacts after = app.contact().all();
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 }

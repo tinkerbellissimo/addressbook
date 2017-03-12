@@ -4,30 +4,17 @@ package com.tinkerbellissimo.addressbook.model;
  * Created by tinkerbellissimo on 2/27/17.
  */
 public class ContactData {
-  private final String firstName;
-  private final String lastName;
-  private final String address;
-  private final String homePhone;
-  private final String group;
+  private String firstName;
+  private String lastName;
+  private String address;
+  private String homePhone;
+  private String mobilePhone;
+  private String workPhone;
+  private String group;
   private int id;
+  private String email;
+  private String allPhones;
 
-  public ContactData(String firstName, String lastName, String address, String homePhone, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.address = address;
-    this.homePhone = homePhone;
-    this.group = group;
-  }
-
-  public ContactData(int id, String firstName, String lastName, String address, String homePhone, String group) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.address = address;
-    this.homePhone = homePhone;
-    this.group = group;
-  }
 
   public String getFirstName() {
     return firstName;
@@ -53,6 +40,72 @@ public class ContactData {
     return id;
   }
 
+  public String getAllPhones() {
+    return allPhones;
+  }
+
+  public String getMobilePhone() {
+    return mobilePhone;
+  }
+
+  public String getWorkPhone() {
+    return workPhone;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withMobilePhone(String mobilePhone) {
+    this.mobilePhone = mobilePhone;
+    return this;
+  }
+
+  public ContactData withWorkPhone(String workPhone) {
+    this.workPhone = workPhone;
+    return this;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
+  public ContactData withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  public ContactData withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withHomePhone(String homePhone) {
+    this.homePhone = homePhone;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
   @Override
   public String toString() {
     return "ContactData{" +
@@ -68,12 +121,15 @@ public class ContactData {
 
     ContactData that = (ContactData) o;
 
+    if (id != that.id) return false;
     return firstName != null ? firstName.equals(that.firstName) : that.firstName == null;
 
   }
 
   @Override
   public int hashCode() {
-    return firstName != null ? firstName.hashCode() : 0;
+    int result = firstName != null ? firstName.hashCode() : 0;
+    result = 31 * result + id;
+    return result;
   }
 }
